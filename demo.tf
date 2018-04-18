@@ -1,10 +1,14 @@
 provider "aws" {
-  access_key = "AKIAJBYQY26YD7HHZ3RQ"
-  secret_key = "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"
-  region     = "us-east-1"
+  region                  = "us-east-1"
+  shared_credentials_file = "~/.aws/credentials"
+  profile                 = "default"
 }
 
 resource "aws_instance" "demo-app" {
   ami           = "ami-b374d5a5"
   instance_type = "t2.micro"
+}
+
+resource "aws_eip" "ip" {
+  instance = "${aws_instance.demo-app.id}"
 }
